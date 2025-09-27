@@ -1,9 +1,10 @@
 import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
-import { getAllContacts, getContactById } from './services/contacts.js';
-
 import { getEnvVar } from './utils/getEnvVar.js';
+import contactsRouter from './routers/contacts.js';
+import { errorHandler } from './middlewares/errorHandler.js';
+import { notFountHandler } from './middlewares/notFoundHandler.js';
 
 const PORT = Number(getEnvVar('PORT'));
 
@@ -21,35 +22,11 @@ export const setupServer = () => {
     }),
   );
 
-  app.get('/contacts', async (req, res) => {
-    const contacts = await getAllContacts();
+  app.use(contactsRouter);
 
-    res.status(200).json({
-      data: contacts,
-    });
-  });
+  app.use(errorHandler);
 
-  app.get('/contacts/:contactId', async (req, res) => {
-    const { contactId } = req.params;
-    const contact = await getContactById(contactId);
-
-    if (!contact) {
-      res.status(404).json({
-        message: 'Student not found',
-      });
-      return;
-    }
-
-    res.status(200).json({
-      data: contact,
-    });
-  });
-
-  app.use((err, req, res, next) => {
-    res.status(404).json({
-      message: 'Not found',
-    });
-  });
+  app.use(notFountHandler);
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
