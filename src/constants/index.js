@@ -27,7 +27,7 @@ export const TEMP_UPLOAD_DIR = path.join(process.cwd());
 export const UPLOAD_DIR = path.join(process.cwd(), 'uploads');
 
 export const CLOUDINARY = {
-  CLOUD_NAME: 'dtykafngo',
-  API_KEY: '518697419396435',
-  API_SECRET: 'L2zEqdHj4hpnwpu3yUA9zp8GP20',
+  CLOUD_NAME: 'CLOUDINARY_NAME',
+  API_KEY: 'CLOUDINARY_API_KEY',
+  API_SECRET: 'CLOUDINARY_API_SECRET',
 };
