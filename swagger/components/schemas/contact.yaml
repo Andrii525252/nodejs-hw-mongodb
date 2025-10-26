@@ -1,14 +1,14 @@
 type: object
 required:
-  - _id
   - name
   - phoneNumber
   - contactType
-  - isFavourite
+  - userId
 properties:
   _id:
     description: "Contact's id"
     type: string
+    pattern: '^[a-f\d]{24}$'
     example: 65e4decdd286b30065d54af9
   name:
     description: "Contact's name"
@@ -16,21 +16,30 @@ properties:
     example: 'John Doe'
   phoneNumber:
     description: "Contact's phone number"
-    type: number
-    example: +380000000005
+    type: string
+    example: +380000000001
+  email:
+    description: "Contact's email"
+    type: string
+    example: oleh1@example.com
+  isFavourite:
+    description: 'Whether the contact is favourite'
+    type: boolean
+    default: false
+    example: false
   contactType:
-    description: 'Contacts type'
+    description: "Contact's type"
     type: string
     enum: ['work', 'home', 'personal']
-  isFavourite:
-    description: 'Favourite status'
-    type: boolean
-    example: false
-  parentId:
-    description: "Contacts's parent id"
+    default: personal
+    example: 'personal'
+  userId:
+    description: 'ID of the user who owns this contact'
     type: string
+    pattern: '^[a-f\d]{24}$'
     example: 65e4decdd286b30065d54af9
   photo:
-    description: "Link to contacts's photo"
+    description: "Link to contact's photo"
     type: string
+    format: uri
     example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
