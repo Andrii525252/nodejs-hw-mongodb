@@ -7,7 +7,13 @@ import { notFountHandler } from './middlewares/notFoundHandler.js';
 import cookieParser from 'cookie-parser';
 import router from './routers/index.js';
 import { UPLOAD_DIR } from './constants/index.js';
-import { swaggerDocs } from './middlewares/swaggerDocs.js';
+import swaggerUi from 'swagger-ui-express';
+import path from 'node:path';
+import * as fs from 'node:fs';
+
+const SWAGGER_DOCUMENT = JSON.parse(
+  fs.readFileSync(path.join('docs', 'swagger.json'), 'utf-8'),
+);
 
 const PORT = Number(getEnvVar('PORT'));
 
@@ -32,7 +38,7 @@ export const setupServer = () => {
 
   app.use(errorHandler);
 
-  app.use('/api-docs', swaggerDocs());
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(SWAGGER_DOCUMENT));
 
   app.use(notFountHandler);
 
